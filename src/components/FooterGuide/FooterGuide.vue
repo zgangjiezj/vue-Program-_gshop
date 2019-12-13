@@ -27,7 +27,12 @@
     },
     methods: {
       goto(path){
-        this.$router.push(path)
+        // 方案一：没有效果==》当前的path与点击的path，不相等时才跳转
+        if(this.$route.path !== path){
+          this.$router.push(path);
+        }
+        // 方案二：刷新界面==》
+        
       },
     },
   }

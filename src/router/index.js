@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Miste from '../pages/Msite/Msite.vue'
+import Msite from '../pages/Msite/Msite.vue'
 import Order from '../pages/Order/Order.vue'
 import Profile from '../pages/Profile/Profile.vue'
 import Search from '../pages/Search/Search.vue'
+import Login from '../pages/Login/login.vue'
 
 // 声明使用vue插件
 Vue.use(VueRouter)
@@ -12,20 +13,36 @@ export default new VueRouter({
       mode: 'history',
       routes: [
           {
-            path: '/miste',
-            component: Miste
+            path: '/msite',
+            component: Msite,
+            meta:{
+              isShowFooter:true,
+            }
           },
           {
             path: '/order',
-            component: Order
+            component: Order,
+            meta:{
+              isShowFooter:true,
+            }
           },
           {
             path: '/profile',
-            component: Profile
+            component: Profile,
+            meta:{
+              isShowFooter:true,
+            }
           },
           {
             path: '/search',
-            component: Search
+            component: Search,
+            meta:{
+              isShowFooter:true,
+            }
+          },
+          {
+            path: '/login',
+            component: Login
           },
 
           // {
@@ -41,7 +58,7 @@ export default new VueRouter({
           // 自动重定向的路由
           {
             path: '/',
-            redirect: '/mister'
+            redirect: '/msiter'
           }
         ]  
       })
