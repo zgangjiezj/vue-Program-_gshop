@@ -11,8 +11,6 @@
 
 import axios from 'axios'
 import qs from 'qs'
-import { Indicator } from 'mint-ui';
-
 const instance = axios.create({
   // 4. 配置请求超时的时间
   timeout:20000,
@@ -20,8 +18,6 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-// 当需要显示加载提示框时，调用 open 方法
-    Indicator.open();
 //3. 对post请求参数进行urlencode处理, 而不使用默认的json方式(后台接口不支持)
      // JSON: {name: 'tom', pwd: '123'} ==>urlencode: name=tom&pwd=123
   const {methods,data} = config;
@@ -32,13 +28,11 @@ instance.interceptors.request.use(function (config) {
 });
 
 instance.interceptors.response.use(function (response) {
-  Indicator.close();
   console.log(response.data)
   // 2. 异步请求成功的数据不是response, 而是response.data
   return response.data;
 
 }, function (error) {
-  Indicator.close();
   alert(error.message)
   // 1. 统一处理请求异常 ===>返回一个pedding状态的promise，中断promise链
   return new Promise(()=>{})

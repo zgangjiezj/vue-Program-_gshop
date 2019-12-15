@@ -16,10 +16,10 @@ export default{
       commit(RECEIVE_ADDRESS,address)
     }
   },
-  async getCategorys({commit}){
+  async getCategorys({commit,state}){
     const result = await reqCategory()
     if(result.code === 0){
-      const categorys = result.data
+      const {categorys} = state
       commit(RECEIVE_CATEGORY,categorys)
     }
   },
@@ -27,8 +27,8 @@ export default{
     const {latitude,longitude} = state
     const result = await reqShops({latitude,longitude})
     if(result.code === 0){
-      const shops = result.data
-      commit(RECEIVE_SHOPS,shops)
+      const {shops} = result.data
+      commit(RECEIVE_ADDRESS,shops)
     }
   },
 }

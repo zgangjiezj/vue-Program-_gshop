@@ -10,7 +10,7 @@
 //  export const baseURL= '/api',
 
 // 1、根据经纬度获取位置详情 ==params参数，自己手动传
-export const reqAddress = (latitude,longitude) =>ajax.get(`/position/${latitude},${longitude}`)
+export const reqAddress = (latitude,longitude) =>ajax.get(`/position/${latitude,longitude}`)
 
 // //  2、获取食品分类列表
 export const reqCategory = () =>ajax('/index_category')

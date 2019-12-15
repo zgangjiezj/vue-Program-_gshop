@@ -58,7 +58,7 @@ export default new VueRouter({
           // 自动重定向的路由
           {
             path: '/',
-            redirect: '/msite'
+            redirect: '/msiter'
           }
         ]  
       })
