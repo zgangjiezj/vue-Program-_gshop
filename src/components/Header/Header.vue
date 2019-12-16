@@ -17,6 +17,7 @@
 
 <script type="text/ecmascript-6">
   export default {
+    // 声明接收属性：由外部传入
     props:{
       title:String
     }

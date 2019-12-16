@@ -14,5 +14,9 @@ export default{
   },
    [RECEIVE_SHOPS](state,shops){
      state.shops = shops   
-  }
+  },
+  // 发短信验证码
+  // [RECEIVE_CODE](state,code){
+  //   state.code = code
+  // }
 }

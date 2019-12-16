@@ -17,3 +17,6 @@ export const reqCategory = () =>ajax('/index_category')
 
 // // 3、根据经纬度获取商铺列表 ===>接收多个数据可以用对象解构赋值传参
 export const reqShops = ({latitude,longitude}) =>ajax('/shops',{params:{latitude,longitude}})
+
+// 发送短信验证码
+export const reqCode = (phone) =>ajax.get('/sendcode',{params:{phone}})

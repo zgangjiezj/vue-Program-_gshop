@@ -31,4 +31,13 @@ export default{
       commit(RECEIVE_SHOPS,shops)
     }
   },
+  // // 短信验证码
+  // async getCode({commit,state}){
+  //   const {code} = state
+  //   const result = await reqShops(code)
+  //   if(result.code === 0){
+  //     const shops = result.data
+  //     commit(RECEIVE_SHOPS,shops)
+  //   }
+  // },
 }
