@@ -7,6 +7,12 @@ import store from './store/store'
 
 import Header from './components/Header/Header.vue'
 import Star from './components/Header/Header.vue'
+import * as API from './api'
+import i18n from './i18n'
+
+
+// 将API挂载到原型对象上
+Vue.property.$API = API
 
 Vue.config.productionTip = false
 
@@ -17,5 +23,6 @@ Vue.component('Star',Star)
 new Vue({
   render: h => h(App),
   router,
+  i18n,
   store
 }).$mount('#app')

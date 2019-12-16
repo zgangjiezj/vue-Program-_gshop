@@ -12,11 +12,11 @@
 // 1、根据经纬度获取位置详情 ==params参数，自己手动传
 export const reqAddress = (latitude,longitude) =>ajax.get(`/position/${latitude},${longitude}`)
 
-// //  2、获取食品分类列表
+// 2、获取食品分类列表
 export const reqCategory = () =>ajax('/index_category')
 
-// // 3、根据经纬度获取商铺列表 ===>接收多个数据可以用对象解构赋值传参
+// 3、根据经纬度获取商铺列表 ===>接收多个数据可以用对象解构赋值传参
 export const reqShops = ({latitude,longitude}) =>ajax('/shops',{params:{latitude,longitude}})
 
-// 发送短信验证码
+// 4、发送短信验证码
 export const reqCode = (phone) =>ajax.get('/sendcode',{params:{phone}})

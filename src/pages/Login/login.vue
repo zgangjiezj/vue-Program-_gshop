@@ -47,7 +47,8 @@
                 <!-- 一次性图形验证码 -->
                 <input type="text" maxlength="11" placeholder="验证码" v-model="captcha" name="captcha" v-validate="{required: true,regex: /^[0-9a-zA-Z]{4}$/}">
                 <span style="color: red;" v-show="errors.has('captcha')">{{ errors.first('captcha') }}</span>
-                <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                <!-- <img class="get_verification" src="http://localhost:4000/captcha" alt="captcha" ref="captcha" @click="updateCaptcha"> -->
+                 <img class="get_verification" src="/api/captcha" alt="captcha" ref="captcha" @click="updateCaptcha">
 
               </section>
             </section>
@@ -68,6 +69,8 @@
   import Vue from 'vue'
   import VeeValidate from 'vee-validate'
   import zh_CN from 'vee-validate/dist/locale/zh_CN'
+
+  import {Toast} from 'mint-ui'
   Vue.use(VeeValidate)
 
    VeeValidate.Validator.localize('zh_CN', {
@@ -104,7 +107,6 @@
     },
     methods: {
       sendCode(){
-
         // 1、启动倒计时 ==>每隔1s减1
           // 如果当前没有进行倒计时，点击才有效
           if(this.daojitime === 0){ 
@@ -117,8 +119,14 @@
                  clearInterval(intervalId)
                }
             }, 1000);
-
          // 2、发ajax请求，向指定手机号发送验证码请求
+         const result = await this.$API.reqCode(this.phone)
+         if(result.code === 0){
+           Toast('已发送！');
+         }else{
+           clearInterval(intervalId);
+           Toast('发送失败！');
+         }
 
           }
         if(this.daojitime === 0){
@@ -142,6 +150,10 @@
           const success = await this.$validator.validateAll(['loginname','password','captcha']) // 对指定的所有表单项进行验证
         }
          
+      },
+      // 一次性图形验证码 ==》指定新的src
+      updateCaptcha(){
+         this.$refs.captcha.src = 'http://localhost:4000/captcha?time=""'+Date.now()
       }
     },
   }
