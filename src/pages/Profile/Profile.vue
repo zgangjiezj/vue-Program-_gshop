@@ -12,12 +12,12 @@
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top" >登录/注册</p>
-          <p>
+          <p class="user-info-top" v-if="!user.phone">{{user.name ? user.name :'登录/注册'}}</p>
+          <p v-if="!user.name">
             <span class="user-icon">
               <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
-            <span class="icon-mobile-number">暂无绑定手机号</span>
+            <span class="icon-mobile-number">{{user.phone ? user.phone :'暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">
@@ -91,16 +91,39 @@
             <i class="iconfont icon-jiantou1"></i>
           </span>
         </div>
-      </a>
+      </a>      
+    </section>
+    <!-- 只有登录了才显示，退出登录 -->
+     <section class="profile_my_order border-1px" v-show="user._id">
+       <!-- 定义的mint-ui组件==》main.js中，全局注册按钮使用 -->
+        <mt-button style='width:100%' type='danger' @click="logout">退出登录</mt-button>   
     </section>
   </section>
 </template>
 
 <script type="text/ecmascript-6">
+import { mapState } from 'vuex'
+import {MessageBox} from 'mint-ui'
+
   export default {
+    computed: {
+      ...mapState(['user'])
+    },
     methods: {
       login(){
-        this.$router.push('/login')
+        this.$router.push(this.user._id ? '/info' :'/login')
+      },
+      logout(){
+        MessageBox.confirm('确定退出登录？').then(
+          ()=>{
+          //  确定===》退出登录，清除数据
+           this.$store.dispatch('layout')
+          },
+          ()=>{
+          //  取消
+          console.log('取消！')
+          }
+        )
       }
     },
   }

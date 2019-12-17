@@ -13,10 +13,30 @@
 export const reqAddress = (latitude,longitude) =>ajax.get(`/position/${latitude},${longitude}`)
 
 // 2、获取食品分类列表
-export const reqCategory = () =>ajax('/index_category')
+export const reqCategory = () =>ajax('/index_category',{
+  // token验证
+  headers:{
+     needCheck:true
+  }
+})
 
 // 3、根据经纬度获取商铺列表 ===>接收多个数据可以用对象解构赋值传参
-export const reqShops = ({latitude,longitude}) =>ajax('/shops',{params:{latitude,longitude}})
+export const reqShops = ({latitude,longitude}) =>ajax('/shops',{
+  params:{latitude,longitude},
+   // token验证
+  headers:{
+    needCheck:true
+ }
+})
 
 // 4、发送短信验证码
 export const reqCode = (phone) =>ajax.get('/sendcode',{params:{phone}})
+
+// 5、手机号验证码登陆
+export const reqSmsLogin = ({phone,code}) =>ajax.post('/login_sms',{phone,code})
+
+// 6、用户名密码登陆
+export const reqPwdLogin = ({name,pwd,captcha}) =>ajax.post('/login_pwd',{name,pwd,captcha})
+
+// 7、自动登陆
+export const reqAutoLogin = () =>ajax.get('/auto_login')

@@ -15,7 +15,8 @@
         //   // const result = await reqAddress(116.36867,40.10038)  
         // },
     mounted() {
-      this.$store.dispatch('getAddress')
+      this.$store.dispatch('getAddress') //获取地址
+      this.$store.dispatch('autoLogin')  //自动登录
     },
   
     components:{   

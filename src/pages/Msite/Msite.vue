@@ -25,9 +25,9 @@
       <div class="swiper-container">
         <div class="swiper-wrapper"  v-if='categorys.length >0'>
           <!-- 二维数组中的大数组 -->
-          <div class="swiper-slide" v-for="(cs,index) in categorysArr1" :key="cs.id" > 
+          <div class="swiper-slide" v-for="(cs) in categorysArr1" :key="cs.id" > 
             <!-- 二维数组中的小数组 -->
-            <div class="link_to_food" v-for="(c,index) in cs" :key="c.id" >
+            <div class="link_to_food" v-for="(c) in cs" :key="c.id" >
               <div class="food_container">
                 <img :src="'https://fuss10.elemecdn.com'+c.image_url">
               </div>
@@ -50,7 +50,8 @@
       </div>
       <div class="shop_container">
         <ul class="shop_list" v-if="shops.length > 0">
-          <li class="shop_li border-1px" v-for="shop in shops" :key='shop.id' >
+          <!--  @click="$router.push ('/shop'),跳转到商家路由界面 -->
+          <li class="shop_li border-1px" v-for="shop in shops" :key='shop.id' @click="$router.push ('/shop')">
             <a>
               <div class="shop_left">
                 <img class="shop_img" :src="'https://fuss10.elemecdn.com'+shop.image_path">

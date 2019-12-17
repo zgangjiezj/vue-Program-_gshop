@@ -31,12 +31,12 @@
           <div  :class="{on:!isShowSms}">
             <section>
               <section class="login_message">
-                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名" v-model="loginname"  name="loginname"  v-validate="{required: true}">
-                <span style="color: red;" v-show="errors.has('loginname')">{{ errors.first('loginname') }}</span>
+                <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名" v-model="name"  name="name"  v-validate="{required: true}">
+                <span style="color: red;" v-show="errors.has('name')">{{ errors.first('name') }}</span>
               </section>
               <section class="login_verification">
-                <input :type="isShowPwd ? 'text' : 'password'" maxlength="8" placeholder="密码" v-model="password" name="password" v-validate="{required: true}">
-                <span style="color: red;" v-show="errors.has('password')">{{ errors.first('password') }}</span>
+                <input :type="isShowPwd ? 'text' : 'password'" maxlength="8" placeholder="密码" v-model="pwd" name="pwd" v-validate="{required: true}">
+                <span style="color: red;" v-show="errors.has('pwd')">{{ errors.first('pwd') }}</span>
 
                 <div class="switch_button " :class="isShowPwd ? 'on' :'false'" @click="isShowPwd=!isShowPwd">
                   <div class="switch_circle" :class="{right:isShowPwd}"></div>
@@ -53,11 +53,14 @@
               </section>
             </section>
           </div>
-          <button class="login_submit" @click.prevent="login">登录</button>
+          <button class="login_submit" @click.prevent="login">{{$t('login_login')}}</button>
         </form>
-        <a href="javascript:;" class="about_us">关于我们</a>
+        <a href="javascript:;" class="about_us">{{$t('login_aboutUs')}}</a>
+        <br>
+         <button style="width:100% " @click="qiehuanlanage">切换语言</button>
+
       </div>
-      <a href="javascript:" class="go_back" @click="$router.back()">
+      <a href="javascript:" class="go_back" @click="$router.replace('/profile')">
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </div>
@@ -70,7 +73,8 @@
   import VeeValidate from 'vee-validate'
   import zh_CN from 'vee-validate/dist/locale/zh_CN'
 
-  import {Toast} from 'mint-ui'
+  import {Toast,MessageBox} from 'mint-ui'
+
   Vue.use(VeeValidate)
 
    VeeValidate.Validator.localize('zh_CN', {
@@ -78,8 +82,8 @@
       attributes: {
         phone: '手机号',
         code: '验证码',
-        password:'密码',
-        loginname:'手机/邮箱/用户名',
+        pwd:'密码',
+       name:'手机/邮箱/用户名',
         captcha:'图形验证码'
 
       }
@@ -91,12 +95,11 @@
         phone:'', //v-model对应的
         isShowPwd:false,//默认密码不可见
         code:'',//v-model对应的
-        loginname:'',
-        password:'',
+        name:'',
+        pwd:'',
         captcha:'',
 
         daojitime:0,//计时剩余的时间
-
       }
     },
     computed: {
@@ -106,7 +109,7 @@
       }
     },
     methods: {
-      sendCode(){
+    async sendCode(){
         // 1、启动倒计时 ==>每隔1s减1
           // 如果当前没有进行倒计时，点击才有效
           if(this.daojitime === 0){ 
@@ -116,44 +119,72 @@
             const intervalId = setInterval(() => {
                this.daojitime--
                if(this.daojitime <= 0){
+                 this.daojitime = 0
                  clearInterval(intervalId)
                }
             }, 1000);
          // 2、发ajax请求，向指定手机号发送验证码请求
-         const result = await this.$API.reqCode(this.phone)
-         if(result.code === 0){
-           Toast('已发送！');
-         }else{
-           clearInterval(intervalId);
-           Toast('发送失败！');
-         }
+          const result = await this.$API.reqCode(this.phone)
+          if(result.code === 0){
+            // 显示提示
+            Toast('已发送！');
+          }else{
+            // 停止计时
+            this.daojitime = 0
+            MessageBox('提示',result.msg || '发送失败！')
+          }
 
           }
-        if(this.daojitime === 0){
-            this.daojitime = 30
-                  const timer = setInterval(() => {
-                    this.daojitime--
-                    if(this.daojitime <=0){
-                      clearInterval(timer)
-                    }
-                  }, 1000);
-        }
-       
-
-       
-
       },
+       // 发登录的请求 
       async login(){
+        // 前台表单验证
+        let success
         if(this.isShowSms){
-          const success = await this.$validator.validateAll(['phone','code']) // 对指定的所有表单项进行验证
+           success = await this.$validator.validateAll(['phone','code']) // 对指定的所有表单项进行验证
         }else{
-          const success = await this.$validator.validateAll(['loginname','password','captcha']) // 对指定的所有表单项进行验证
+           success = await this.$validator.validateAll(['loginname','pwd','captcha']) // 对指定的所有表单项进行验证
+        }
+       // 如果验证通过, 发送登陆的请求
+        if(success){
+          const {isShowSms,name,pwd,captcha,phone,code} = this
+          let result 
+          if(isShowSms){
+            // 短信登录的请求
+             result = await this.$API.reqSmsLogin({phone,code})
+          }else{
+            // 密码登录的请求
+             result = await this.$API.reqPwdLogin({name,pwd,captcha})
+            //  更新图形验证码，清空输入
+            this.updateCaptcha()
+            this.captcha = ''
+          }
+
+          // 根据请求结果，做不同的响应
+          if(result.code === 0){
+            const user = result.data
+            //将user保存到vuex中 ====>user 和token 保存到state
+            this.$store.dispatch('saveUser',user)
+            // 跳转页面
+            this.$router.push({path:'/profile'})
+          }else{
+            MessageBox('提示',result.msg)
+          }
         }
          
       },
       // 一次性图形验证码 ==》指定新的src
       updateCaptcha(){
-         this.$refs.captcha.src = 'http://localhost:4000/captcha?time=""'+Date.now()
+         this.$refs.captcha.src = 'http://localhost:4000/captcha?time='+Date.now()
+      },
+      // 国际化
+      qiehuanlanage(){
+         // 根据当前的locale确定新的locale
+        const locale = this.$i18n.locale === 'en' ? 'zh_CN' : 'en'
+        // 指定新的locale
+        this.$i18n.locale = locale
+        // 保存新的locale
+        localStorage.setItem('locale_key', locale)
       }
     },
   }

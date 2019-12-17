@@ -3,8 +3,16 @@
 方法可以包含异步和逻辑处理代码
 */
 
- import {RECEIVE_ADDRESS,RECEIVE_CATEGORY,RECEIVE_SHOPS} from './mutations_type'
- import {reqAddress,reqCategory,reqShops} from '../api/index'
+ import {RECEIVE_ADDRESS,
+  RECEIVE_CATEGORY,
+  RECEIVE_SHOPS,
+  RECEIVE_TOKEN,
+  RECEIVE_USER,
+  RESET_TOKEN,
+  RESET_USER
+} from './mutations_type'
+ import {reqAddress,reqCategory,reqShops,reqAutoLogin} from '../api/index'
+
 
 export default{
    
@@ -31,13 +39,36 @@ export default{
       commit(RECEIVE_SHOPS,shops)
     }
   },
-  // // 短信验证码
-  // async getCode({commit,state}){
-  //   const {code} = state
-  //   const result = await reqShops(code)
-  //   if(result.code === 0){
-  //     const shops = result.data
-  //     commit(RECEIVE_SHOPS,shops)
-  //   }
-  // },
+  // 将user/token保存到state中
+  saveUser({commit},user){
+    const token = user.token
+    // 将token保存到localStorage
+    localStorage.setItem('token_id',token)
+    delete user.token 
+    commit(RECEIVE_TOKEN,token)
+    commit(RECEIVE_USER,user)
+  },
+
+  // 自动登录
+  async autoLogin({commit,state}){
+    if(state.token && !state.user._id){
+      const result = await reqAutoLogin()
+      if(result.code === 0){
+        const user = result.data
+        commit(RECEIVE_USER,user)
+      }
+    }
+  },
+
+  // 清除数据
+  layout({commit}){
+    // 清除local中的token
+    localStorage.removeItem('token_id')
+    // 将state中的user和token重置
+    commit(RESET_TOKEN)
+    commit(RESET_USER)
+
+  }
+
+
 }
