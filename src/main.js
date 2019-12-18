@@ -7,11 +7,11 @@ import store from './store/store'
 
 import Header from './components/Header/Header.vue'
 import Star from './components/Header/Header.vue'
+import CartControl from './components/CartControl/CartControl.vue'
 import * as API from './api'
-
 import i18n from './i18n'
-
 import {Button} from 'mint-ui'
+import './mock/mock-serve'
 
 
 // 将API挂载到原型对象上
@@ -22,6 +22,7 @@ Vue.config.productionTip = false
 // 全局注册Header组件
 Vue.component('Header',Header)
 Vue.component('Star',Star)
+Vue.component('CartControl',CartControl)
 Vue.component(Button.name,Button)
 
 new Vue({

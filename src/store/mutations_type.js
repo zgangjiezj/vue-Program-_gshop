@@ -10,3 +10,8 @@ export const RECEIVE_USER = 'receive_user'
 // 清除数据
 export const RESET_USER = 'reset_user'
 export const RESET_TOKEN = 'reset_token'
+
+// mock模拟数据
+export const RECEIVE_GOODS = 'receive_goods'
+export const RECEIVE_RATINGS = 'receive_ratings'
+export const RECEIVE_INFO = 'receive_info'

@@ -9,5 +9,8 @@ export default{
   categorys: [], // 分类数组
   shops: [], //商家数组
   user:{},
-  token:localStorage.getItem('token_id')
+  token:localStorage.getItem('token_id'),
+  goods:{},
+  info:[],
+  ratings:[],
 }

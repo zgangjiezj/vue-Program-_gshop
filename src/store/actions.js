@@ -9,9 +9,20 @@
   RECEIVE_TOKEN,
   RECEIVE_USER,
   RESET_TOKEN,
-  RESET_USER
+  RESET_USER,
+  RECEIVE_GOODS,
+  RECEIVE_RATINGS,
+  RECEIVE_INFO
 } from './mutations_type'
- import {reqAddress,reqCategory,reqShops,reqAutoLogin} from '../api/index'
+ import {
+  reqAddress,
+  reqCategory,
+  reqShops,
+  reqAutoLogin, 
+  reqGoods, 
+  reqRatings,
+  reqInfo,
+} from '../api/index'
 
 
 export default{
@@ -59,7 +70,6 @@ export default{
       }
     }
   },
-
   // 清除数据
   layout({commit}){
     // 清除local中的token
@@ -67,8 +77,35 @@ export default{
     // 将state中的user和token重置
     commit(RESET_TOKEN)
     commit(RESET_USER)
+  },
 
-  }
+  // 模拟数据 ===》三个方法
+  async getInfo({commit},cb){
+    const result = await reqInfo()
+    if(result.code === 0){
+      const info = result.data
+      commit(RECEIVE_INFO,info)
+    }
+    typeof cb ==='function' && cb()
+  },
+  async getGoods({commit},cb){
+    const result = await reqGoods()
+    if(result.code === 0){
+      const goods = result.data
+      commit(RECEIVE_GOODS,goods)
+    }
+    typeof cb ==='function' && cb()
+  },
+  async getRating({commit},cb){
+    const result = await reqRatings()
+    if(result.code === 0){
+      const ratings = result.data
+      commit(RECEIVE_RATINGS,ratings)
+    }
+    typeof cb ==='function' && cb()
+  },
+
+
 
 
 }

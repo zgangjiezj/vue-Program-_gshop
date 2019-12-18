@@ -57,7 +57,7 @@ export default new VueRouter({
                 component:Goods
               },
               {
-                path:'/shop/rating',
+                path:'/shop/ratings',
                 component:Rating
               },
               {

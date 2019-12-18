@@ -12,7 +12,7 @@
 
 import axios from 'axios'
 import qs from 'qs'
-import { Indicator,Toast } from 'mint-ui';
+import { Indicator,Toast,MessageBox } from 'mint-ui';
 import store from '../store/store'
 import router from '../router/index'
 

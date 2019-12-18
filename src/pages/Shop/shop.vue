@@ -1,23 +1,30 @@
 <template>
-  <div class='tab'>
-   <ShopHeader></ShopHeader>
-   <div class="tab-item">
-     <router-link to='/shop/goods' replace>点餐</router-link>
-   </div>
-    <div class="tab-item">
-     <router-link to='/shop/rating' replace>评价</router-link>
-   </div>
-    <div class="tab-item">
-     <router-link to='/shop/info' replace>商家</router-link>
-   </div>
-   <router-view></router-view>
+  <div>
+      <ShopHeader></ShopHeader>
+      <div class='tab'>
+        <div class="tab-item">
+          <router-link to='/shop/goods' replace>点餐</router-link>
+        </div>
+          <div class="tab-item">
+          <router-link to='/shop/rating' replace>评价</router-link>
+        </div>
+          <div class="tab-item">
+          <router-link to='/shop/info' replace>商家</router-link>
+        </div>
+      </div>
+      <router-view></router-view>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import ShopHeader from '../../components/shopHeader/shopHeader'
-  export default {
 
+  export default {
+    mounted() {
+      this.$store.dispatch('getInfo')
+      this.$store.dispatch('getGoods')
+      this.$store.dispatch('getRating')
+    },
     components:{
       ShopHeader
     }
@@ -25,7 +32,7 @@ import ShopHeader from '../../components/shopHeader/shopHeader'
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-    @import "../../common/stylus/mixins.styl"
+  @import "../../common/stylus/mixins.styl"
   .tab
     height 40px
     line-height 40px
