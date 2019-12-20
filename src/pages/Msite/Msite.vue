@@ -51,7 +51,7 @@
       <div class="shop_container">
         <ul class="shop_list" v-if="shops.length > 0">
           <!--  @click="$router.push ('/shop'),跳转到商家路由界面 -->
-          <li class="shop_li border-1px" v-for="shop in shops" :key='shop.id' @click="$router.push ('/shop')">
+          <li class="shop_li border-1px" v-for="shop in shops" :key='shop.id' @click="$router.replace('/shop')">
             <a>
               <div class="shop_left">
                 <img class="shop_img" :src="'https://fuss10.elemecdn.com'+shop.image_path">
@@ -113,7 +113,11 @@ import chunk from 'lodash/chunk'
 
   export default {
     computed: {
-      ...mapState(['address','shops','categorys']),
+      ...mapState({
+        address: state=>state.msite.address,
+        shops:state=>state.msite.shops,
+        categorys:state=>state.msite.categorys,
+      }),
 
       //自定义： 一维数组转二维数组
       categorysArr(){

@@ -1,21 +1,29 @@
 <template>
-  <div class="footer_guide ">
-      <span  class='footer_item ' @click="goto('/msite')" :class="{active:$route.path === '/msite'}">
-        <span class="iconfont">&#xe622;</span>
-        <span>{{$t('footer_home')}}</span>
+  <div class="footer-guide">
+    <span class="guide-item" :class="{on: $route.path==='/msite'}" @click="goto('/msite')">
+      <span>
+        <i class="iconfont icon-waimai"></i>
       </span>
-      <span  class='footer_item' @click="goto('/search')" :class="{active:$route.path === '/search'}">
-        <span class="iconfont">&#xe618;</span>
-        <span>{{$t('footer_search')}}</span>
+      <span>{{$t('footer_home')}}</span>
+    </span>
+    <span class="guide-item" :class="{on: $route.path==='/search'}" @click="goto('/search')">
+      <span>
+        <i class="iconfont icon-search2"></i>
       </span>
-      <span  class='footer_item'@click="goto('/order')" :class="{active:$route.path === '/order'}">
-        <span class="iconfont">&#xe606;</span>
-        <span>{{$t('footer_order')}}</span>
+      <span>搜索</span>
+    </span>
+    <span class="guide-item" :class="{on: $route.path==='/order'}" @click="goto('/order')">
+      <span>
+        <i class="iconfont icon-dingdan"></i>
       </span>
-      <span  class='footer_item' @click="goto('/profile')" :class="{active:$route.path === '/profile'}">
-        <span class="iconfont">&#xe649;</span>
-        <span>{{$t('footer_own')}}</span>
+      <span>订单</span>
+    </span>
+    <span class="guide-item" :class="{on: $route.path==='/profile'}" @click="goto('/profile')">
+      <span>
+        <i class="iconfont icon-geren"></i>
       </span>
+      <span>个人</span>
+    </span>
   </div>
 </template>
 
@@ -44,29 +52,26 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  @import "../../common/stylus/mixins.styl"
-    .footer_guide
-      top-border-1px(#e4e4e4)
-      position fixed
-      left 0
-      bottom 0
-      width 100%
-      height 50px
-      background-color #fff
-      display flex 
-      .footer_item
-         display flex
-         flex-direction column 
-         align-items center 
-         justify-content space-around
-         width 25%
-         color #999999
-         &.active
-            color #02a774
-         span
-          font-size 12px
-          margin-top 2px
-          margin-bottom 2px
-         .iconfont
+   @import '../../common/stylus/mixins.styl'
+  .footer-guide
+    top-border-1px(#cccccc)
+    display flex
+    position fixed
+    left 0
+    bottom 0
+    height 50px
+    width 100%
+    background #fff
+    .guide-item
+      display flex
+      flex-direction column
+      text-align center
+      width 25%
+      &.on
+        color $green
+      span
+        margin-top 3px
+        font-size 12px
+        i
           font-size 22px
 </style>

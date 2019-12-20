@@ -32,7 +32,7 @@ instance.interceptors.request.use(function (config) {
     config.data = qs.stringify(data);
   }
 // 5. 通过请求头携带token数据
-    const token  = store.state.token 
+    const token  = store.state.user.token 
     if(token){
       config.headers['Authorization'] = token
     }else{

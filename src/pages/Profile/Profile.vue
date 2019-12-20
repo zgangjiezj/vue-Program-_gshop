@@ -107,7 +107,9 @@ import {MessageBox} from 'mint-ui'
 
   export default {
     computed: {
-      ...mapState(['user'])
+      ...mapState({
+        user:state=>state.user.user
+      })
     },
     methods: {
       login(){
@@ -133,6 +135,7 @@ import {MessageBox} from 'mint-ui'
   @import '../../common/stylus/mixins.styl'
 
   .profile //我的
+    overflow hidden
     width 100%
     .header
       background-color #02a774

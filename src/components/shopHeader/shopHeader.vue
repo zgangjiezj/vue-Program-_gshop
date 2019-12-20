@@ -121,7 +121,9 @@ import { mapState } from 'vuex'
       }
     },
     computed: {
-      ...mapState(['info'])
+      ...mapState({
+        info: state =>state.shop.info
+      })
     },
   }
 </script>
@@ -132,7 +134,6 @@ import { mapState } from 'vuex'
   .shop-header
     height 100%
     position relative
-    z-index 999
     background #fff
     color #fff
     overflow hidden
@@ -163,7 +164,6 @@ import { mapState } from 'vuex'
     .shop-content
       padding 30px 20px 5px 20px
       position relative
-      z-index 9999
       display flex
       background #fff
       text-align center

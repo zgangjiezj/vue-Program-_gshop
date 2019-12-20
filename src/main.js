@@ -12,6 +12,12 @@ import * as API from './api'
 import i18n from './i18n'
 import {Button} from 'mint-ui'
 import './mock/mock-serve'
+import VueLazyload from 'vue-lazyload'
+import loading from './common/images/loading.gif'
+
+Vue.use(VueLazyload, {
+  loading,
+})
 
 
 // 将API挂载到原型对象上

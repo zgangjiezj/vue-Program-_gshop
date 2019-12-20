@@ -15,3 +15,10 @@ export const RESET_TOKEN = 'reset_token'
 export const RECEIVE_GOODS = 'receive_goods'
 export const RECEIVE_RATINGS = 'receive_ratings'
 export const RECEIVE_INFO = 'receive_info'
+
+
+// 购物车
+export const ADD = 'add'
+export const REMOVE = 'remove'
+
+export const CLEAR_SHOPCART = 'claer_shopcart'
