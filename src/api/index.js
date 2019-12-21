@@ -41,7 +41,10 @@ export const reqPwdLogin = ({name,pwd,captcha}) =>ajax.post('/login_pwd',{name,p
 // 7、自动登陆
 export const reqAutoLogin = () =>ajax.get('/auto_login')
 
-// 8、发请求===》mock数据
-export const reqInfo = () =>ajax('/info')
-export const reqRatings = () =>ajax('/ratings')
-export const reqGoods = () =>ajax('/goods')
+// 8、发请求===》mock数据--》模拟数据改变了
+// export const reqInfo = () =>ajax('/info')
+// export const reqRatings = () =>ajax('/ratings')
+// export const reqGoods = () =>ajax('/goods')
+
+// 根据params参数id来发请求
+export const reqShop = (id) =>ajax('/shop/'+id)

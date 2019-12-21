@@ -1,6 +1,9 @@
 <template>
     <div>
-       <router-view></router-view>
+      <keep-alive exclude="Shop">
+          <router-view></router-view>
+      </keep-alive>
+     
       <FooterGuide v-show="$route.meta.isShowFooter"></FooterGuide>    
     </div>
 </template>

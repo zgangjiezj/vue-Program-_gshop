@@ -1,9 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Msite from '../pages/Msite/Msite.vue'
-import Order from '../pages/Order/Order.vue'
-import Profile from '../pages/Profile/Profile.vue'
-import Search from '../pages/Search/Search.vue'
+
+// import Msite from '../pages/Msite/Msite.vue'
+// import Order from '../pages/Order/Order.vue'
+// import Profile from '../pages/Profile/Profile.vue'
+// import Search from '../pages/Search/Search.vue'
+
+// 动态引入：
+const Msite = () =>import( '../pages/Msite/Msite.vue')
+const Order = () =>import( '../pages/Order/Order')
+const Profile = () =>import( '../pages/Profile/Profile.vue')
+const Search = () =>import( '../pages/Search/Search.vue')
+
+
 import Login from '../pages/Login/login.vue'
 import Shop from '../pages/Shop/shop.vue'
 import Goods from '../pages/Shop/goods.vue'
@@ -18,7 +27,8 @@ export default new VueRouter({
       routes: [
           {
             path: '/msite',
-            component: Msite,
+            // 简化写法，直接把函数写在里面
+            component:  () =>import( '../pages/Msite/Msite.vue'),
             meta:{
               isShowFooter:true,
             }
@@ -49,24 +59,26 @@ export default new VueRouter({
             component: Login
           },
           {
-            path: '/shop',
+            path: '/shop/:id',
+            props:true,
             component: Shop,
+        //默认路径以/shop开始
             children:[
               {
-                path:'/shop/goods',
+                path:'goods',
                 component:Goods
               },
               {
-                path:'/shop/ratings',
+                path:'ratings',
                 component:Rating
               },
               {
-                path:'/shop/info',
+                path:'info',
                 component:Info
               },
               {
-                path:'/shop',
-               redirect:'/shop/goods'
+                path:'',
+               redirect:'goods'
               },
             ]
           },

@@ -72,7 +72,7 @@ import ShopCart from '../../components/ShopCart/shopcart'
     },
     computed: {
       ...mapState({
-        goods: state=>state.shop.goods
+        goods: state=>state.shop.shop.goods || []
       }),
       currentIndex(){
         const {scrollY,tops} = this
@@ -87,7 +87,10 @@ import ShopCart from '../../components/ShopCart/shopcart'
     },
     methods: {
 
-      _initScroll(){
+   
+        _initScroll(){
+           if(!this.leftBScroll){
+             console.log('sdsd')
          this.leftBScroll = new BScroll(this.$refs.left,{
           //  配置对象
           click:true
@@ -104,7 +107,11 @@ import ShopCart from '../../components/ShopCart/shopcart'
             this.scrollY = Math.abs(y)
         })
 
-      },
+      }else{
+     this.leftBScroll.refresh();
+      this.rightBScroll.refresh();
+      }
+    },
 
       _initTop(){
         const tops  = []
@@ -136,14 +143,20 @@ import ShopCart from '../../components/ShopCart/shopcart'
         this.$refs.food.toggleShow()
       }
     },
-    watch: {
-      goods(){
-         this.$nextTick(()=>{
-           this._initScroll()
-           this._initTop()
-         })
+    mounted() {
+      if(this.goods.length>0){
+        this._initScroll()
+        this._initTop()
       }
     },
+    // watch: {
+    //   goods(){
+    //      this.$nextTick(()=>{
+    //        this._initScroll()
+    //        this._initTop()
+    //      })
+    //   }
+    // },
     components:{
       Food,
       ShopCart

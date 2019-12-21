@@ -24,7 +24,7 @@ import throttle from 'lodash/throttle'
     //  处理节流：点击多次，只调用一次函数，显示
       AddRemove:throttle(function (isAdd){
        this.$store.dispatch('AddRemove',{isAdd,food:this.food})
-     },1000)
+     },1000,{trailing:false})//trailing:false===》点击两次，1s内响应一次，
     },
     //  更新数据后界面不变:新添加的属性，没有数据绑定==》count的问题
     //  food在goods中，数据goods在哪，更新goods的方法就在哪 ==》goods在vuex中，因此要定义在actions中，vuex的一套

@@ -12,13 +12,15 @@ export const RESET_USER = 'reset_user'
 export const RESET_TOKEN = 'reset_token'
 
 // mock模拟数据
-export const RECEIVE_GOODS = 'receive_goods'
-export const RECEIVE_RATINGS = 'receive_ratings'
-export const RECEIVE_INFO = 'receive_info'
+// export const RECEIVE_GOODS = 'receive_goods'
+// export const RECEIVE_RATINGS = 'receive_ratings'
+// export const RECEIVE_INFO = 'receive_info'
 
+export const RECEIVE_SHOP = 'recive_shop'
+export const RESET_SHOP= 'reset_shop'
 
-// 购物车
+//cartControl
 export const ADD = 'add'
 export const REMOVE = 'remove'
-
+// cartFoods
 export const CLEAR_SHOPCART = 'claer_shopcart'
